@@ -7,10 +7,10 @@ public class Room
 {
     public static int IDCount = 0;
     public int ID;
-    public Vector3Int Position;
+    public Vector3Int GridPosition;
     public int Width, Height;
     public int[] openDirection = { 0, 0, 0, 0 };
-    public Vector3 AreaColliderWorldPosition;
+    public Vector3 CenterWorldPosition;
     public float AreaColliderWidth, AreaColliderHeight;
     public int walkAbleWidth { get; private set; }
     public int walkAbleHeight { get; private set; }
@@ -19,7 +19,7 @@ public class Room
 
     public Room(Vector3Int pos, int w, int h)
     {
-        Position = pos;
+        GridPosition = pos;
         Width = w;
         Height = h;
         walkAbleWidth = w - 2;
@@ -28,7 +28,7 @@ public class Room
         IDCount++;
         AreaColliderWidth = w - 2;
         AreaColliderHeight = h - 1;
-        AreaColliderWorldPosition = Position + Vector3.right + new Vector3(AreaColliderWidth / 2, -AreaColliderHeight / 2, 0);
+        CenterWorldPosition = GridPosition + Vector3.right + new Vector3(AreaColliderWidth / 2, -AreaColliderHeight / 2, 0);
     }
 
     public override bool Equals(object obj)
