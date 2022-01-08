@@ -28,7 +28,7 @@ public class DungeonGenerator : MonoBehaviour
     {
         ConstrainMinAndMax();
         int tries = 100;
-        while (tries > 0 && (roomGenerator.Rooms.Count < MinRoomCount || roomGenerator.Rooms.Count > MaxRoomCount))
+        while (tries > 0 && !ZTools.InRangeInclusive(roomGenerator.Rooms.Count, MinRoomCount, MaxRoomCount))
         {
             tries--;
             roomGenerator.Reset();
@@ -47,10 +47,6 @@ public class DungeonGenerator : MonoBehaviour
         Rooms = roomGenerator.Rooms;
     }
 
-    private void Update()
-    {
-        
-    }
     private List<Room> FindEndRooms(List<Room> rooms)
     {
         List<Room> result = new List<Room>(); 
@@ -74,14 +70,14 @@ public class DungeonGenerator : MonoBehaviour
 
     private void ConstrainMinAndMax()
     {
-        if (MinRoomWidth < 4) MinRoomWidth = 4;
-        if (MinRoomHeight < 4) MinRoomHeight = 4;
-        if (MaxRoomWidth < 4) MaxRoomWidth = 4;
-        if (MaxRoomHeight < 4) MaxRoomHeight = 4;
+        if (MinRoomWidth < 6) MinRoomWidth = 6;
+        if (MinRoomHeight < 6) MinRoomHeight = 6;
+        if (MaxRoomWidth < 6) MaxRoomWidth = 6;
+        if (MaxRoomHeight < 6) MaxRoomHeight = 6;
         MaxRoomWidth = Mathf.FloorToInt(Mathf.Clamp(MaxRoomWidth, MinRoomWidth, Mathf.Infinity));
         MaxRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MaxRoomHeight, MinRoomHeight, Mathf.Infinity));
-        MinRoomWidth = Mathf.FloorToInt(Mathf.Clamp(MinRoomWidth, 4, MaxRoomWidth));
-        MinRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MinRoomHeight, 4, MaxRoomHeight));
+        MinRoomWidth = Mathf.FloorToInt(Mathf.Clamp(MinRoomWidth, 6, MaxRoomWidth));
+        MinRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MinRoomHeight, 6, MaxRoomHeight));
         roomGenerator.MinRoomWidth = MinRoomWidth;
         roomGenerator.MinRoomHeight = MinRoomHeight;
         roomGenerator.MaxRoomWidth = MaxRoomWidth;

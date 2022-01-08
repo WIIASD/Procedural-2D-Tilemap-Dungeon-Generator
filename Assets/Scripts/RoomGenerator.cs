@@ -24,11 +24,20 @@ public class RoomGenerator : MonoBehaviour
 
     public int MinRoomWidth, MinRoomHeight, MaxRoomWidth, MaxRoomHeight;
 
-    private void Start()
+    public BoundsInt bounds;
+
+    private void Awake()
     {
         Rooms = new List<Room>();
         RoomAreaColliderHolder = new GameObject();
         RoomAreaColliderHolder.name = "RoomAreaColliderHolder";
+        
+        /*Tile[] tileArray = new Tile[25];
+        for (int i = 0; i < tileArray.Length; i++)
+        {
+            tileArray[i] = Ground;
+        }
+        GroundTilemap.SetTilesBlock(bounds, tileArray);*/
         //Room r = GenerateRoom(Vector3Int.zero, 10, 10, new int[] { 0, 0, 0, 0 });
         ////GenerateNeighborRoom(r, 20, 15, Sides.Bottom);
         //GenerateNeighborRoom(r, 6, 1, Sides.Left);
@@ -45,6 +54,7 @@ public class RoomGenerator : MonoBehaviour
         Room.IDCount = 0;
         GroundTilemap.ClearAllTiles();
         WallTilemap.ClearAllTiles();
+        WallTilemapNoCollider.ClearAllTiles();
     }
 
     //TODO: simplfy code
@@ -252,9 +262,16 @@ public class RoomGenerator : MonoBehaviour
 
     private void GeneratePlane(Tilemap tilemap, Tile tile, Vector3Int position, int w, int h)
     {
-        for (int i=0; i<w; i++)
+        /*BoundsInt bounds = new BoundsInt(position.x, position.y - h, 0, w, h, 0);
+        TileBase[] tileArray = new TileBase[w*h];
+        for (int i = 0; i < tileArray.Length; i++)
         {
-            for (int j=0; j<h; j++)
+            tileArray[i] = tile;
+        }
+        tilemap.SetTilesBlock(bounds, tileArray);*/
+        for (int i = 0; i < w; i++)
+        {
+            for (int j = 0; j < h; j++)
             {
                 Vector3Int pos = new Vector3Int(position.x + i, position.y - j, 0);
                 tilemap.SetTile(pos, tile);
