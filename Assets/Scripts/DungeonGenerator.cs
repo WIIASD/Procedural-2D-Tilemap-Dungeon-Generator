@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(RoomGenerator))]
 public class DungeonGenerator : MonoBehaviour
 {
     //public float GrowFactor, ShrinkFactor;
-    public int MinRoomCount, MaxRoomCount;
+    public static System.Random rnd = new System.Random();
+    public int RoomCount;
     public int StartWidth, StartHeight;
     public int MinRoomWidth, MinRoomHeight, MaxRoomWidth, MaxRoomHeight;
     [Range(0, 1)]
     public float PNeighborSpawnMin, PNeighborSpawnMax;
-    public int generations;
     public List<Room> Rooms;
     public Room StartRoom;
     public List<Room> EndRooms;
@@ -27,7 +30,13 @@ public class DungeonGenerator : MonoBehaviour
     void Start()
     {
         ConstrainMinAndMax();
-        int tries = 100;
+        roomGenerator.Reset();
+        StartRoom = roomGenerator.GenerateRoom(Vector3Int.zero, StartWidth, StartHeight, new int[] { 0, 0, 0, 0 });
+        StartRoom.cleared = true;
+        GenerateNeighborsForRoomNumbers(StartRoom, RoomCount-1);
+        EndRooms = FindEndRooms(roomGenerator.Rooms);
+        Rooms = roomGenerator.Rooms;
+        /*int tries = 100;
         while (tries > 0 && !ZTools.InRangeInclusive(roomGenerator.Rooms.Count, MinRoomCount, MaxRoomCount))
         {
             tries--;
@@ -44,7 +53,7 @@ public class DungeonGenerator : MonoBehaviour
             print("Cannot Generate. Please change Min/Max Room Count or generations.");
         }
         EndRooms = FindEndRooms(roomGenerator.Rooms);
-        Rooms = roomGenerator.Rooms;
+        Rooms = roomGenerator.Rooms;*/
     }
 
     private List<Room> FindEndRooms(List<Room> rooms)
@@ -84,16 +93,57 @@ public class DungeonGenerator : MonoBehaviour
         roomGenerator.MaxRoomHeight = MaxRoomHeight;
     }
 
+    private void GenerateNeighborsForRoomNumbers(Room r, int roomNum)
+    {
+        int generatedRoomCount = 0;
+        //List<Room> currentRoomList = new List<Room>() { r };
+        Queue<Room> currentRoomQueue = new Queue<Room>();
+        currentRoomQueue.Enqueue(r);
+        while (generatedRoomCount<roomNum)
+        {
+            Room currentRoom = currentRoomQueue.Dequeue();
+            Enum.GetValues(typeof(Sides));
+            List<Sides> AllSides = new List<Sides>((Sides[])Enum.GetValues(typeof(Sides))).OrderBy(a=>rnd.Next()).ToList();
+            foreach (Sides s in AllSides)
+            {
+                Vector2Int rndSize = RandomDimension(r.Width, r.Height);
+                Room n = roomGenerator.GenerateNeighborRoom(currentRoom, rndSize.x, rndSize.y, s);
+                if (n != null)
+                {
+                    generatedRoomCount++;
+                    if (generatedRoomCount == roomNum) return;
+                    currentRoomQueue.Enqueue(n);
+                }
+            }
+        }
+        
+    }
+
     private void GenerateNeighborsForGenerations(Room r, int generations)
     {
         if (generations <= 0)
         {
             return;
         }
-        foreach (Room rr in GenerateRandomNeighbors(r, PNeighborSpawnMin, PNeighborSpawnMax))
+        foreach (Room rr in GenerateNeighbors(r, PNeighborSpawnMin, PNeighborSpawnMax))
         {
             GenerateNeighborsForGenerations(rr, generations-1);
         }
+    }
+
+    private List<Room> GenerateNeighbors(Room r, float minProb, float maxProb)
+    {
+        List<Room> result = new List<Room>();
+        foreach (Sides s in Enum.GetValues(typeof(Sides)))
+        {
+            Vector2Int rndSize = RandomDimension(r.Width, r.Height);
+            Room n = roomGenerator.GenerateNeighborRoom(r, rndSize.x, rndSize.y, s);
+            if (n != null)
+            {
+                result.Add(n);
+            }
+        }
+        return result;
     }
 
     private List<Room> GenerateRandomNeighbors(Room r, float minProb, float maxProb)
