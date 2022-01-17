@@ -662,17 +662,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dbcdb74b6acceb429694c8d3907f6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinRoomCount: 10
-  MaxRoomCount: 15
+  RoomCount: 30
   StartWidth: 10
   StartHeight: 10
-  MinRoomWidth: 6
-  MinRoomHeight: 6
+  MinRoomWidth: 10
+  MinRoomHeight: 10
   MaxRoomWidth: 20
   MaxRoomHeight: 20
   PNeighborSpawnMin: 0
   PNeighborSpawnMax: 1
-  generations: 4
   Rooms: []
   StartRoom:
     ID: 0
