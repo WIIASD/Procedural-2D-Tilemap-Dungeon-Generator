@@ -667,8 +667,8 @@ MonoBehaviour:
   StartHeight: 10
   MinRoomWidth: 10
   MinRoomHeight: 10
-  MaxRoomWidth: 20
-  MaxRoomHeight: 20
+  MaxRoomWidth: 40
+  MaxRoomHeight: 40
   PNeighborSpawnMin: 0
   PNeighborSpawnMax: 1
   Rooms: []
