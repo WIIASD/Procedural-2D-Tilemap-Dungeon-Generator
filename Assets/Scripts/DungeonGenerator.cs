@@ -65,10 +65,10 @@ public class DungeonGenerator : MonoBehaviour
         MaxRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MaxRoomHeight, MinRoomHeight, Mathf.Infinity));
         MinRoomWidth = Mathf.FloorToInt(Mathf.Clamp(MinRoomWidth, 6, MaxRoomWidth));
         MinRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MinRoomHeight, 6, MaxRoomHeight));
-        roomGenerator.MinRoomWidth = MinRoomWidth;
-        roomGenerator.MinRoomHeight = MinRoomHeight;
-        roomGenerator.MaxRoomWidth = MaxRoomWidth;
-        roomGenerator.MaxRoomHeight = MaxRoomHeight;
+        //roomGenerator.MinRoomWidth = MinRoomWidth;
+        //roomGenerator.MinRoomHeight = MinRoomHeight;
+        //roomGenerator.MaxRoomWidth = MaxRoomWidth;
+        //roomGenerator.MaxRoomHeight = MaxRoomHeight;
     }
 
     private void GenerateNeighborsForRoomNumbers(Room r, int roomNum)

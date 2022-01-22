@@ -643,10 +643,6 @@ MonoBehaviour:
   WallTilemapNoCollider: {fileID: 875219968}
   Rooms: []
   RoomAreaColliderHolder: {fileID: 0}
-  MinRoomWidth: 6
-  MinRoomHeight: 6
-  MaxRoomWidth: 100
-  MaxRoomHeight: 100
   bounds:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 5, y: 5, z: 0}
@@ -667,10 +663,8 @@ MonoBehaviour:
   StartHeight: 10
   MinRoomWidth: 10
   MinRoomHeight: 10
-  MaxRoomWidth: 40
-  MaxRoomHeight: 40
-  PNeighborSpawnMin: 0
-  PNeighborSpawnMax: 1
+  MaxRoomWidth: 10
+  MaxRoomHeight: 10
   Rooms: []
   StartRoom:
     ID: 0
@@ -685,7 +679,6 @@ MonoBehaviour:
     cleared: 0
   EndRooms: []
   roomGenerator: {fileID: 0}
-  dungeonManager: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
