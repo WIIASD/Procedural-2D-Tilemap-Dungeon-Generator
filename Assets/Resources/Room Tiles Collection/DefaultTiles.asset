@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f1c0b8cd6b21f41b0a06c0880d3e87, type: 3}
   m_Name: DefaultTiles
   m_EditorClassIdentifier: 
-  Ground: {fileID: 0}
-  GroundLeft: {fileID: 0}
-  GroundRight: {fileID: 0}
-  GroundLeftCorner: {fileID: 0}
-  GroundRightCorner: {fileID: 0}
-  GroundTop: {fileID: 0}
-  WallFace: {fileID: 0}
-  WallFaceCornerLeft: {fileID: 0}
-  WallFaceCornerRight: {fileID: 0}
-  Wallleft: {fileID: 0}
-  Wallright: {fileID: 0}
-  WallTop: {fileID: 0}
-  WallBottom: {fileID: 0}
-  WallTopLeftCorner: {fileID: 0}
-  WallTopRightCorner: {fileID: 0}
-  WallTopLeftCorner2: {fileID: 0}
-  WallTopRightCorner2: {fileID: 0}
-  WallBottomLeftOutterCorner: {fileID: 0}
-  WallBottomRightOutterCorner: {fileID: 0}
-  WallBottomLeftInnerCorner: {fileID: 0}
-  WallBottomRightInnerCorner: {fileID: 0}
+  Ground: {fileID: 11400000, guid: 1a748bde491aadd449f2e5d1eefdd104, type: 2}
+  GroundLeft: {fileID: 11400000, guid: ca3b76f7eeb390b478ac11efe8f20fd6, type: 2}
+  GroundRight: {fileID: 11400000, guid: 61eab12a42d37b04d8d2db79114fdca0, type: 2}
+  GroundLeftCorner: {fileID: 11400000, guid: f1362ec76cddba848be76f4a7a731d05, type: 2}
+  GroundRightCorner: {fileID: 11400000, guid: 60287c57fcbe18b458542130e1f48e0f, type: 2}
+  GroundTop: {fileID: 11400000, guid: db9b1065b621a32448d482c8a519a014, type: 2}
+  WallFace: {fileID: 11400000, guid: c11f5bce80ab1c94d94372d52b4cc7a4, type: 2}
+  WallFaceCornerLeft: {fileID: 11400000, guid: 9f27224fb47c5e2458db84e89666159c, type: 2}
+  WallFaceCornerRight: {fileID: 11400000, guid: 870bf2896bd730749bc27c1df1b3a132, type: 2}
+  Wallleft: {fileID: 11400000, guid: a2aaa5efb04b4e5439542e5ef9beb9d5, type: 2}
+  Wallright: {fileID: 11400000, guid: f02dbab7e1c386e46a630573f922a888, type: 2}
+  WallTop: {fileID: 11400000, guid: 7bc5406d76b985142ad7fa14a5254a06, type: 2}
+  WallBottom: {fileID: 11400000, guid: 7bc5406d76b985142ad7fa14a5254a06, type: 2}
+  WallTopLeftCorner: {fileID: 11400000, guid: caeab439ecca30248983b04c7ef09454, type: 2}
+  WallTopRightCorner: {fileID: 11400000, guid: 3a8eb2e3d373b584ea1e3560f05bfd80, type: 2}
+  WallTopLeftCorner2: {fileID: 11400000, guid: a44d13f0220c1b1459ee8854af7bbfb7, type: 2}
+  WallTopRightCorner2: {fileID: 11400000, guid: 2c917aee3038bab46bbdca6593d4413a, type: 2}
+  WallBottomLeftOutterCorner: {fileID: 11400000, guid: bea30f4f76d015b42a6126d9cf07fc80, type: 2}
+  WallBottomRightOutterCorner: {fileID: 11400000, guid: e4ecabaa9b13b1b40b958edc933c7875, type: 2}
+  WallBottomLeftInnerCorner: {fileID: 11400000, guid: 8c2295824d5ee2f4a9ba62c0d8accddc, type: 2}
+  WallBottomRightInnerCorner: {fileID: 11400000, guid: 25f173bd50d92964a9cccc5abaa5f051, type: 2}

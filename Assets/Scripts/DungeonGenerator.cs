@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,15 +12,15 @@ public class DungeonGenerator : MonoBehaviour
     public int RoomCount;
     public int StartWidth, StartHeight;
     public int MinRoomWidth, MinRoomHeight, MaxRoomWidth, MaxRoomHeight;
-    public List<Room> Rooms;
-    public Room StartRoom;
-    public List<Room> EndRooms;
+    public List<RectangleRoom> Rooms;
+    public RectangleRoom StartRoom;
+    public List<RectangleRoom> EndRooms;
     public RoomGenerator roomGenerator;
 
-    private void Awake()
+    void Awake()
     {
         roomGenerator = GetComponent<RoomGenerator>();
-        EndRooms = new List<Room>();
+        EndRooms = new List<RectangleRoom>();
     }
     void Start()
     {
@@ -34,10 +33,10 @@ public class DungeonGenerator : MonoBehaviour
         Rooms = roomGenerator.Rooms;
     }
 
-    private List<Room> FindEndRooms(List<Room> rooms)
+    private List<RectangleRoom> FindEndRooms(List<RectangleRoom> rooms)
     {
-        List<Room> result = new List<Room>(); 
-        foreach (Room r in rooms)
+        List<RectangleRoom> result = new List<RectangleRoom>(); 
+        foreach (RectangleRoom r in rooms)
         {
             int openCount = 0;
             foreach (int i in r.openDirection)
@@ -65,27 +64,23 @@ public class DungeonGenerator : MonoBehaviour
         MaxRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MaxRoomHeight, MinRoomHeight, Mathf.Infinity));
         MinRoomWidth = Mathf.FloorToInt(Mathf.Clamp(MinRoomWidth, 6, MaxRoomWidth));
         MinRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MinRoomHeight, 6, MaxRoomHeight));
-        //roomGenerator.MinRoomWidth = MinRoomWidth;
-        //roomGenerator.MinRoomHeight = MinRoomHeight;
-        //roomGenerator.MaxRoomWidth = MaxRoomWidth;
-        //roomGenerator.MaxRoomHeight = MaxRoomHeight;
     }
 
-    private void GenerateNeighborsForRoomNumbers(Room r, int roomNum)
+    private void GenerateNeighborsForRoomNumbers(RectangleRoom r, int roomNum)
     {
         int generatedRoomCount = 0;
-        Queue<Room> currentRoomQueue = new Queue<Room>();
+        Queue<RectangleRoom> currentRoomQueue = new Queue<RectangleRoom>();
         currentRoomQueue.Enqueue(r);
         while (generatedRoomCount<roomNum)
         {
-            Room currentRoom = currentRoomQueue.Dequeue();
+            RectangleRoom currentRoom = currentRoomQueue.Dequeue();
             Enum.GetValues(typeof(Sides));
             //randomize the the order of Sides to generate
             List<Sides> AllSides = new List<Sides>((Sides[])Enum.GetValues(typeof(Sides))).OrderBy(a=>rnd.Next()).ToList();
             foreach (Sides s in AllSides)
             {
                 Vector2Int rndSize = RandomDimension(r.Width, r.Height);
-                Room n = roomGenerator.GenerateNeighborRoom(currentRoom, rndSize.x, rndSize.y, s);
+                RectangleRoom n = roomGenerator.GenerateNeighborRoom(currentRoom, rndSize.x, rndSize.y, s);
                 if (n != null)
                 {
                     generatedRoomCount++;

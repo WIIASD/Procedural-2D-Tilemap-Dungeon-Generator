@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Room
+public class RectangleRoom : RoomBase
 {
-    public static int IDCount = 0;
-    public int ID;
-    public Vector3Int GridPosition;
-    public int Width, Height;
+    
     public int[] openDirection = { 0, 0, 0, 0 };
-    public Vector3 CenterWorldPosition;
+    
     public float AreaColliderWidth, AreaColliderHeight;
     public int walkAbleWidth { get; private set; }
     public int walkAbleHeight { get; private set; }
-    public BoxCollider2D bc;
     public bool cleared = false;
 
-    public Room(Vector3Int pos, int w, int h)
+    public RectangleRoom(Vector3Int pos, int w, int h) : base(pos, w, h)
     {
-        GridPosition = pos;
-        Width = w;
-        Height = h;
         walkAbleWidth = w - 2;
         walkAbleHeight = h - 1;
         ID = IDCount;
@@ -31,13 +24,16 @@ public class Room
         CenterWorldPosition = GridPosition + Vector3.right + new Vector3(AreaColliderWidth / 2, -AreaColliderHeight / 2, 0);
     }
 
-    public override bool Equals(object obj)
+    public override int[,]  GenerateGroundMatrix()
     {
-        if (obj.GetType() != this.GetType())
-        {
-            return false;
-        }
-        Room r = (Room)obj;
-        return r.ID==this.ID;
+        int[,] result = new int[Height, Width];
+        ZTools.FillInt2DArray(result, 1);
+        return result;
+    }
+
+    public override int[,] GenerateWallMatrix()
+    {
+        int[,] result = new int[Height, Width];
+        return result;
     }
 }
