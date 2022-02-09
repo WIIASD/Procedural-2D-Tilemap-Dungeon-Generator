@@ -7,9 +7,11 @@ using UnityEngine.Tilemaps;
 public class RoomTilePalette : ScriptableObject
 {
     public static int GROUND_TILE_START_ID = 0, WALL_TILE_START_ID = 50;
-    public Dictionary<string, Tile> Tiles = new Dictionary<string, Tile>();
-    public Tile Ground, GroundLeft, GroundRight, GroundLeftCorner,
+    public Dictionary<int, Tile> TilesDictionary = new Dictionary<int, Tile>();
+    public Tile //ground
+                Ground, GroundLeft, GroundRight, GroundLeftCorner,
                 GroundRightCorner, GroundTop,
+                //wall
                 WallFace, WallFaceCornerLeft, WallFaceCornerRight, Wallleft, Wallright, WallTop,
                 WallBottom, WallTopLeftCorner, WallTopRightCorner, WallTopLeftCorner2, WallTopRightCorner2,
                 WallBottomLeftOutterCorner, WallBottomRightOutterCorner,
@@ -27,33 +29,32 @@ public class RoomTilePalette : ScriptableObject
                 WallBottom, WallTopLeftCorner, WallTopRightCorner, WallTopLeftCorner2, WallTopRightCorner2,
                 WallBottomLeftOutterCorner, WallBottomRightOutterCorner,
                 WallBottomLeftInnerCorner, WallBottomRightInnerCorner};
+        for (int i = 0; i < GroundTileList.Count; i++)
+        {
+            TilesDictionary.Add(GROUND_TILE_START_ID+i, GroundTileList[i]);
+        }
+        for (int i = 0; i < WallTileList.Count; i++)
+        {
+            TilesDictionary.Add(WALL_TILE_START_ID + i, WallTileList[i]);
+        }
     }
 
-    public int GetID(Tile tile)
+    public int GetID(Tile tile)//only search the first occurence since there should not be duplicated tiles in the palette
     {
-        if (GroundTileList == null || WallTileList == null) throw new Exception("TilePalette ID Not Initialized!");
-        int result = -1;
-        result = GroundTileList.IndexOf(tile);
-        if (result != -1) return GROUND_TILE_START_ID + result;
-        result = WallTileList.IndexOf(tile);
-        if (result != -1) return WALL_TILE_START_ID + result;
-        return result;
+        foreach (KeyValuePair<int, Tile> pair in TilesDictionary)
+        {
+            if (pair.Value.Equals(tile))
+            {
+                return pair.Key;
+            }
+        }
+        return -1;
     }
 
     public Tile GetTile(int ID)
     {
         if (ID == -1) return null;
-        if (!ZTools.InRangeInclusive(ID, GROUND_TILE_START_ID, WALL_TILE_START_ID + WallTileList.Count)) throw new Exception("TilePalette ID Our Of Range!");
-        if(ID < WALL_TILE_START_ID)
-        {//ground
-            if (ID > GROUND_TILE_START_ID + GroundTileList.Count) throw new Exception("TilePalette ID Our Of Range (Ground) !");
-            return GroundTileList[ID];
-        }
-        else if(ID >= WALL_TILE_START_ID)
-        {
-            return WallTileList[ID-WALL_TILE_START_ID];
-        }
-        return null;
+        return TilesDictionary[ID];
     }
 
 }

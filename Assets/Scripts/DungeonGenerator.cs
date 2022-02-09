@@ -32,9 +32,9 @@ public class DungeonGenerator : MonoBehaviour
         ZTools.PrintInt2DArray(StartRoom.GroundMatrix);
         print("wall matrix");
         ZTools.PrintInt2DArray(StartRoom.WallMatrix);
-        /*GenerateNeighborsForRoomNumbers(StartRoom, RoomCount - 1);
+        GenerateNeighborsForRoomNumbers(StartRoom, RoomCount - 1);
         EndRooms = FindEndRooms(roomGenerator.Rooms);
-        Rooms = roomGenerator.Rooms;*/
+        Rooms = roomGenerator.Rooms;
     }
 
     private List<RectangleRoom> FindEndRooms(List<RectangleRoom> rooms)
