@@ -24,6 +24,11 @@ public class DungeonGenerator : MonoBehaviour
     }
     void Start()
     {
+        generateDungeon();
+    }
+
+    public void generateDungeon()
+    {
         ConstrainMinAndMax();
         roomGenerator.Reset();
         StartRoom = roomGenerator.GenerateRoom(Vector3Int.zero, StartWidth, StartHeight, new int[] { 0, 0, 0, 0 });
