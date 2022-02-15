@@ -1,8 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+/// <summary>
+/// Scriptable object containing data for individual tile palette
+/// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "Room Tiles Collection", order = 51)]    
 public class RoomTilePalette : ScriptableObject
 {

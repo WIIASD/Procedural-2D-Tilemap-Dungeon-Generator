@@ -1,7 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
+/// <summary>
+/// Manager class that manages palette scriptable objects
+/// </summary>
 public class RoomTilePaletteManager : ZMonoSingleton<RoomTilePaletteManager>
 {
     public List<RoomTilePalette> Palettes;

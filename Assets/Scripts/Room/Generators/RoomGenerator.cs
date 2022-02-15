@@ -6,6 +6,9 @@ public enum Sides{
     Left,Right,Bottom,Top
 }
 
+/// <summary>
+/// Component that responsible of generating rooms base on their layouts
+/// </summary>
 public class RoomGenerator : MonoBehaviour
 {
     public RoomTilePalette TilePalette;
@@ -19,25 +22,6 @@ public class RoomGenerator : MonoBehaviour
         RoomAreaColliderHolder = new GameObject();
         RoomAreaColliderHolder.name = "RoomAreaColliderHolder";
         TilePalette = RoomTilePaletteManager.Instance.GetCurrentPalette();
-    }
-
-    private void Start()
-    {
-        //int[,] result = new int[5, 10];
-        ////array = ZTools.FillInt2DArray(array, 1);
-        //for(int y = 0; y < result.GetLength(0); y++)
-        //{
-        //    for(int x = 0; x < result.GetLength(1); x++){
-        //        if (y == 0 || x == 0 || y == result.GetLength(0)-1 || x == result.GetLength(1) - 1)
-        //        {
-        //            result[y, x] = 1;
-        //        }
-        //    }
-        //}
-        //ZTools.PrintInt2DArray(result);
-        //RectangleRoom room = new RectangleRoom(Vector3Int.zero, 10, 10);
-        //RectangleRoom room1 = new RectangleRoom(Vector3Int.zero, 10, 10);
-        //print(room.Equals(room));
     }
 
     internal void Reset()

@@ -1,11 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// This is the class handling data of rectangular rooms 
+/// </summary>
 [System.Serializable]
 public class RectangleRoom : RoomBase
 {
-    
+    /// <summary>
+    /// 0 -> closed, 1 -> open
+    /// </summary>
     public int[] openDirection = { 0, 0, 0, 0 };
     
     public float AreaColliderWidth, AreaColliderHeight;

@@ -1,7 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for singleton design pattern
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class ZMonoSingleton<T> : MonoBehaviour where T : Component
 {
     private static T _instance = null;

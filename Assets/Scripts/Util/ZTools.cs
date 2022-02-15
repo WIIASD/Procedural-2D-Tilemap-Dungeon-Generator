@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Static class that provides various mathematical/structural tools
+/// </summary>
 public static class ZTools
 {
     public static bool InRangeInclusive(float value, float min, float max)
@@ -9,6 +10,11 @@ public static class ZTools
         float realMin = Mathf.Min(min, max);
         float realMax = Mathf.Max(min, max);
         return (value >= realMin && value <= realMax);
+    }
+
+    public static int RandomIntExclusive(int min, int max)
+    {
+        return Random.Range(min, max);
     }
 
     public static int[,] FillInt2DArray(int[,] array, int value)

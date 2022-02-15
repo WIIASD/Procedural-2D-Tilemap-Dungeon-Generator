@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Component responsible for using room generator to generate the whole dungeon
+/// </summary>
 [RequireComponent(typeof(RoomGenerator))]
 public class DungeonGenerator : MonoBehaviour
 {
@@ -24,7 +27,7 @@ public class DungeonGenerator : MonoBehaviour
     }
     void Start()
     {
-        generateDungeon();
+        //generateDungeon();
     }
 
     public void generateDungeon()
@@ -75,6 +78,11 @@ public class DungeonGenerator : MonoBehaviour
         MinRoomHeight = Mathf.FloorToInt(Mathf.Clamp(MinRoomHeight, 6, MaxRoomHeight));
     }
 
+    /// <summary>
+    /// Generate certain number of rooms given a start room r
+    /// </summary>
+    /// <param name="r">start room</param>
+    /// <param name="roomNum">number of room to generate</param>
     private void GenerateNeighborsForRoomNumbers(RectangleRoom r, int roomNum)
     {
         int generatedRoomCount = 0;

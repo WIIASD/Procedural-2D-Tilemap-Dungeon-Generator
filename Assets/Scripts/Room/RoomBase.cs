@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for a room
+/// </summary>
 public abstract class RoomBase
 {
     public static int IDCount = 0;
