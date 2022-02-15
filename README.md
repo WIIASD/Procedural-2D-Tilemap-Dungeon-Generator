@@ -1,6 +1,6 @@
 # 2D Procedural Tilemap Dungeon Generator
-**Coded by:** Ziyang Li (WIIASD)
-**Last Edit:** 2/14/2022
+**Coded by:** Ziyang Li (WIIASD)  
+**Last Edit:** 2/14/2022  
 **Directory Structure:**
 - Assets/
 	- Scripts/
