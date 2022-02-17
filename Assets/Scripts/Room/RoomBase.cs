@@ -12,8 +12,7 @@ public abstract class RoomBase
     public Collider2D RoomCollder;
     public int Width, Height;
     public bool cleared = false;
-    public int[,] GroundMatrix { get; protected set; }
-    public int[,] WallMatrix { get; protected set; }
+    public int[,] LayoutMatrix { get; protected set; }
 
     protected RoomBase(Vector3Int pos, int w, int h)
     {
@@ -21,9 +20,7 @@ public abstract class RoomBase
         GridPosition = pos;
         Width = w;
         Height = h;
-        GroundMatrix = GenerateRoomLayoutBaseMatrix();
-        WallMatrix = GenerateRoomLayoutBaseMatrix();
-        //DrawLayout();
+        LayoutMatrix = GenerateRoomLayoutBaseMatrix();
     }
 
     private void initializeID()

@@ -26,70 +26,49 @@ public class RectangleRoom : RoomBase
 
     public override void DrawGround(RoomTilePalette palette)
     {
-        ZTools.FillInt2DArray(GroundMatrix, palette.GetID(palette.Ground));
-        for (int y = 0; y < GroundMatrix.GetLength(0); y++)
+        ZTools.FillInt2DArray(LayoutMatrix, palette.GetID(palette.Ground));
+        for (int y = 0; y < LayoutMatrix.GetLength(0); y++)
         {
-            GroundMatrix[y, 0] = -1;
-            GroundMatrix[y, GroundMatrix.GetLength(1) - 1] = -1;
+            LayoutMatrix[y, 0] = -1;
+            LayoutMatrix[y, LayoutMatrix.GetLength(1) - 1] = -1;
         }
-        for (int x = 0; x < GroundMatrix.GetLength(1); x++)
+        for (int x = 0; x < LayoutMatrix.GetLength(1); x++)
         {
-            GroundMatrix[0, x] = -1;
+            LayoutMatrix[0, x] = -1;
         }
     }
 
     public override void DrawWall(RoomTilePalette palette)
     {
-        for(int y = 0; y < WallMatrix.GetLength(0); y++)
+        if (LayoutMatrix.GetLength(0) < 2 || LayoutMatrix.GetLength(1) < 2) 
+            throw new System.Exception("Cannot DrawWall: Dimension Error!");
+        int wallFaceId = palette.GetID(palette.WallFace);
+        int leftWallId = palette.GetID(palette.Wallleft);
+        int rightWallId = palette.GetID(palette.Wallright);
+        int topWallId = palette.GetID(palette.WallTop);
+        int bottomWallId = palette.GetID(palette.WallBottom);
+        int topLeftCornerId = palette.GetID(palette.WallTopLeftCorner);
+        int topRightCornerId = palette.GetID(palette.WallTopRightCorner);
+        int bottomleftCornerId = palette.GetID(palette.WallBottomLeftOutterCorner);
+        int bottomRightCornerId = palette.GetID(palette.WallBottomRightOutterCorner);
+        //horizontal walls
+        for (int x = 0; x < LayoutMatrix.GetLength(1); x++)
         {
-            for(int x = 0; x < WallMatrix.GetLength(1); x++){
-
-                if (y == 0 && x == 0)//top left corner
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.WallTopLeftCorner);
-                    continue;
-                }
-                if (y == 0 && x == WallMatrix.GetLength(1) - 1)//top right corner
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.WallTopRightCorner);
-                    continue;
-                }
-                if (x == 0 && y == WallMatrix.GetLength(0) - 1)//bottom left corner
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.WallBottomLeftOutterCorner);
-                    continue;
-                }
-                if (x == WallMatrix.GetLength(1) - 1 && y == WallMatrix.GetLength(0) - 1)//bottom right corner
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.WallBottomRightOutterCorner);
-                    continue;
-                }
-                if (x == 0)//left wall
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.Wallleft);
-                    continue;
-                }
-                if (x == WallMatrix.GetLength(1) - 1) //right wall
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.Wallright);
-                    continue;
-                }
-                if (y == 0)//top wall
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.WallTop);
-                    continue;
-                }
-                if (y == WallMatrix.GetLength(0) - 1)//bottom wall
-                {
-                    WallMatrix[y, x] = palette.GetID(palette.WallBottom);
-                    continue;
-                }
-                if (y == 1)//wall face
-                {
-                    GroundMatrix[y, x] = palette.GetID(palette.WallFace);
-                }
-
-            }
+            LayoutMatrix[0, x] = topWallId;
+            //goes to ground matrix because this has not collider
+            LayoutMatrix[1, x] = LayoutMatrix[1, x] != -1 ? wallFaceId : -1;
+            LayoutMatrix[LayoutMatrix.GetLength(0) - 1, x] = bottomWallId;
         }
+        //vertical walls
+        for (int y = 0; y < LayoutMatrix.GetLength(0); y++)
+        {
+            LayoutMatrix[y, 0] = leftWallId;
+            LayoutMatrix[y, LayoutMatrix.GetLength(1) - 1] = rightWallId;
+        }
+        //corners
+        LayoutMatrix[0, 0] = topLeftCornerId;
+        LayoutMatrix[0, LayoutMatrix.GetLength(1) - 1] = topRightCornerId;
+        LayoutMatrix[LayoutMatrix.GetLength(0) - 1, 0] = bottomleftCornerId;
+        LayoutMatrix[LayoutMatrix.GetLength(0) - 1, LayoutMatrix.GetLength(1) - 1] = bottomRightCornerId;
     }
 }

@@ -12,7 +12,7 @@ public enum Sides{
 public class RoomGenerator : MonoBehaviour
 {
     public RoomTilePalette TilePalette;
-    public Tilemap GroundTilemap, WallTilemap, WallTilemapNoCollider;
+    public Tilemap tilemap;
     public List<RectangleRoom> Rooms;
     public GameObject RoomAreaColliderHolder;
 
@@ -31,9 +31,7 @@ public class RoomGenerator : MonoBehaviour
         RoomAreaColliderHolder = new GameObject();
         RoomAreaColliderHolder.name = "RoomAreaColliderHolder";
         RectangleRoom.IDCount = 0;
-        GroundTilemap.ClearAllTiles();
-        WallTilemap.ClearAllTiles();
-        WallTilemapNoCollider.ClearAllTiles();
+        tilemap.ClearAllTiles();
     }
 
 
@@ -49,10 +47,8 @@ public class RoomGenerator : MonoBehaviour
         }
 
         r.DrawLayout(TilePalette);
-        int[,] groundLayout = r.GroundMatrix;
-        int[,] wallLayout = r.WallMatrix;
-        DrawLayoutMatrix(position, groundLayout, GroundTilemap, TilePalette);
-        DrawLayoutMatrix(position, wallLayout, WallTilemap, TilePalette);
+        int[,] layout = r.LayoutMatrix;
+        DrawLayoutMatrix(position, layout, tilemap, TilePalette);
 
         if (r.openDirection[0] == 1) OpenExitVertical(r, Sides.Left);
         if (r.openDirection[1] == 1) OpenExitVertical(r, Sides.Right);
@@ -156,14 +152,14 @@ public class RoomGenerator : MonoBehaviour
         Vector3Int pR = pL + Vector3Int.right;
         if (dir == Sides.Bottom)
         {
-            GeneratePlane(WallTilemap, TilePalette.WallBottom, pL, 2, 1);
+            GeneratePlane(tilemap, TilePalette.WallBottom, pL, 2, 1);
         }
         else
         {
-            WallTilemap.SetTile(pL, TilePalette.WallBottomLeftInnerCorner);
-            WallTilemap.SetTile(pL + Vector3Int.right, TilePalette.WallBottomRightInnerCorner);
+            tilemap.SetTile(pL, TilePalette.WallBottomLeftInnerCorner);
+            tilemap.SetTile(pL + Vector3Int.right, TilePalette.WallBottomRightInnerCorner);
         }
-        GeneratePlane(WallTilemapNoCollider, TilePalette.WallFace, pL + Vector3Int.down, 2, 1);
+        GeneratePlane(tilemap, TilePalette.WallFace, pL + Vector3Int.down, 2, 1);
     }
 
     private void CloseVerticalExit(RectangleRoom r, Sides dir)
@@ -172,8 +168,8 @@ public class RoomGenerator : MonoBehaviour
         int xOffset = dir == Sides.Left ? 0 : r.Width - 1;
         Vector3Int pB = new Vector3Int(r.GridPosition.x + xOffset, r.GridPosition.y - r.Height / 2 - 1, 0);
         Vector3Int pT = pB + Vector3Int.up;
-        WallTilemap.SetTile(pB, dir == Sides.Left ? TilePalette.WallBottomRightInnerCorner : TilePalette.WallBottomLeftInnerCorner);
-        WallTilemap.SetTile(pT, dir == Sides.Left ? TilePalette.Wallleft : TilePalette.Wallright);
+        tilemap.SetTile(pB, dir == Sides.Left ? TilePalette.WallBottomRightInnerCorner : TilePalette.WallBottomLeftInnerCorner);
+        tilemap.SetTile(pT, dir == Sides.Left ? TilePalette.Wallleft : TilePalette.Wallright);
     }
 
     private bool OpenExitHorizontal(RectangleRoom r, Sides dir)
@@ -184,17 +180,17 @@ public class RoomGenerator : MonoBehaviour
         int yOffset = dir == Sides.Top ? 0 : -r.Height + 1;
         Vector3Int pL = new Vector3Int(r.GridPosition.x + r.Width / 2 - 1, r.GridPosition.y + yOffset, 0);
         Vector3Int pR = pL + Vector3Int.right;
-        WallTilemap.SetTile(pL, dir == Sides.Top ? TilePalette.WallBottomRightOutterCorner : TilePalette.WallTopRightCorner);
-        WallTilemap.SetTile(pR, dir == Sides.Top ? TilePalette.WallBottomLeftOutterCorner : TilePalette.WallTopLeftCorner);
+        tilemap.SetTile(pL, dir == Sides.Top ? TilePalette.WallBottomRightOutterCorner : TilePalette.WallTopRightCorner);
+        tilemap.SetTile(pR, dir == Sides.Top ? TilePalette.WallBottomLeftOutterCorner : TilePalette.WallTopLeftCorner);
         if (dir == Sides.Top)
         {
-            GeneratePlane(GroundTilemap, TilePalette.Ground, pL, 2, 3);
-            WallTilemapNoCollider.SetTile(pL + Vector3Int.down, TilePalette.WallFaceCornerRight);
-            WallTilemapNoCollider.SetTile(pL + Vector3Int.down + Vector3Int.right, TilePalette.WallFaceCornerLeft);
+            //GeneratePlane(GroundTilemap, TilePalette.Ground, pL, 2, 3);
+            tilemap.SetTile(pL + Vector3Int.down, TilePalette.WallFaceCornerRight);
+            tilemap.SetTile(pL + Vector3Int.down + Vector3Int.right, TilePalette.WallFaceCornerLeft);
         }
         else
         {
-            GeneratePlane(GroundTilemap, TilePalette.Ground, pL + Vector3Int.down, 2, 1);
+            GeneratePlane(tilemap, TilePalette.Ground, pL + Vector3Int.down, 2, 1);
         }
         return true;
     }
@@ -208,15 +204,15 @@ public class RoomGenerator : MonoBehaviour
         Tile btmCorner = dir == Sides.Left ? TilePalette.WallBottomRightInnerCorner : TilePalette.WallBottomLeftInnerCorner;
         Vector3Int pB = new Vector3Int(r.GridPosition.x + xOffset, r.GridPosition.y - r.Height / 2 - 1, 0);
         Vector3Int pT = pB + new Vector3Int(0,3,0);
-        WallTilemap.SetTile(pB, (dir == Sides.Left ? TilePalette.WallTopRightCorner2 : TilePalette.WallTopLeftCorner2));
-        GroundTilemap.SetTile(pB, TilePalette.Ground);
-        GroundTilemap.SetTile(pB - (dir == Sides.Left ? Vector3Int.left : Vector3Int.right), TilePalette.Ground);
-        GroundTilemap.SetTile(pB + Vector3Int.up - (dir == Sides.Left ? Vector3Int.left : Vector3Int.right), TilePalette.Ground);
-        WallTilemapNoCollider.SetTile(pB + new Vector3Int(0, 2, 0), TilePalette.WallFace);
-        GroundTilemap.SetTile(pB + Vector3Int.up, TilePalette.GroundTop);
-        WallTilemap.SetTile(pB + Vector3Int.up, null);
-        WallTilemap.SetTile(pB + new Vector3Int(0, 2, 0), null);
-        WallTilemap.SetTile(pT, pT.y == r.GridPosition.y ? TilePalette.WallBottom : btmCorner);
+        tilemap.SetTile(pB, (dir == Sides.Left ? TilePalette.WallTopRightCorner2 : TilePalette.WallTopLeftCorner2));
+        tilemap.SetTile(pB, TilePalette.Ground);
+        tilemap.SetTile(pB - (dir == Sides.Left ? Vector3Int.left : Vector3Int.right), TilePalette.Ground);
+        tilemap.SetTile(pB + Vector3Int.up - (dir == Sides.Left ? Vector3Int.left : Vector3Int.right), TilePalette.Ground);
+        tilemap.SetTile(pB + new Vector3Int(0, 2, 0), TilePalette.WallFace);
+        tilemap.SetTile(pB + Vector3Int.up, TilePalette.GroundTop);
+        tilemap.SetTile(pB + Vector3Int.up, null);
+        tilemap.SetTile(pB + new Vector3Int(0, 2, 0), null);
+        tilemap.SetTile(pT, pT.y == r.GridPosition.y ? TilePalette.WallBottom : btmCorner);
         return true;
     }
 
@@ -227,8 +223,8 @@ public class RoomGenerator : MonoBehaviour
             for(int j = 0; j < h; j++)
             {
                 Vector3Int pos = new Vector3Int(position.x + i, position.y - j, 0);
-                if (GroundTilemap.GetTile(pos) != null) return false;
-                if (WallTilemap.GetTile(pos) != null) return false;
+                if (tilemap.GetTile(pos) != null) return false;
+                if (tilemap.GetTile(pos) != null) return false;
             }
         }
         return true;
