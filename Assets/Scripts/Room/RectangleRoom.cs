@@ -48,9 +48,13 @@ public class RectangleRoom : RoomBase
         int topWallId = palette.GetID(palette.WallTop);
         int bottomWallId = palette.GetID(palette.WallBottom);
         int topLeftCornerId = palette.GetID(palette.WallTopLeftCorner);
+        int topLeftCorner2Id = palette.GetID(palette.WallTopLeftCorner2);
+        int topRightCorner2Id = palette.GetID(palette.WallTopRightCorner2);
         int topRightCornerId = palette.GetID(palette.WallTopRightCorner);
-        int bottomleftCornerId = palette.GetID(palette.WallBottomLeftOutterCorner);
-        int bottomRightCornerId = palette.GetID(palette.WallBottomRightOutterCorner);
+        int btmleftCornerId = palette.GetID(palette.WallBottomLeftOutterCorner);
+        int btmRightCornerId = palette.GetID(palette.WallBottomRightOutterCorner);
+        int btmLeftInnerCornerId= palette.GetID(palette.WallBottomLeftInnerCorner);
+        int btmRightInnerCornerId = palette.GetID(palette.WallBottomRightInnerCorner);
         //horizontal walls
         for (int x = 0; x < LayoutMatrix.GetLength(1); x++)
         {
@@ -68,7 +72,15 @@ public class RectangleRoom : RoomBase
         //corners
         LayoutMatrix[0, 0] = topLeftCornerId;
         LayoutMatrix[0, LayoutMatrix.GetLength(1) - 1] = topRightCornerId;
-        LayoutMatrix[LayoutMatrix.GetLength(0) - 1, 0] = bottomleftCornerId;
-        LayoutMatrix[LayoutMatrix.GetLength(0) - 1, LayoutMatrix.GetLength(1) - 1] = bottomRightCornerId;
+        LayoutMatrix[LayoutMatrix.GetLength(0) - 1, 0] = btmleftCornerId;
+        LayoutMatrix[LayoutMatrix.GetLength(0) - 1, LayoutMatrix.GetLength(1) - 1] = btmRightCornerId;
+        //entrance
+        if (openDirection[0] == 1)
+        {
+            LayoutMatrix[LayoutMatrix.GetLength(0) / 2, 0] = -1;
+            LayoutMatrix[LayoutMatrix.GetLength(0) / 2 - 1, 0] = -1;
+            LayoutMatrix[LayoutMatrix.GetLength(0) / 2 - 2, 0] = btmRightInnerCornerId;
+            LayoutMatrix[LayoutMatrix.GetLength(0) / 2 + 1, 0] = topRightCorner2Id;
+        }
     }
 }

@@ -42,6 +42,11 @@ public abstract class RoomBase
         DrawWall(palette);
     }
 
+    public virtual void ClearLayout()
+    {
+        ZTools.FillInt2DArray(LayoutMatrix, 0);
+    }
+
     public abstract void DrawGround(RoomTilePalette palette);
     public abstract void DrawWall(RoomTilePalette palette);
 

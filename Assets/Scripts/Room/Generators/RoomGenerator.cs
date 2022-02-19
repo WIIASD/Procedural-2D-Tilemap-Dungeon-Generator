@@ -46,14 +46,19 @@ public class RoomGenerator : MonoBehaviour
             return null;
         }
 
-        r.DrawLayout(TilePalette);
-        int[,] layout = r.LayoutMatrix;
-        DrawLayoutMatrix(position, layout, tilemap, TilePalette);
+        //todo: need to draw all at once when finish generating 
 
-        if (r.openDirection[0] == 1) OpenExitVertical(r, Sides.Left);
+        r.DrawGround(TilePalette);
+        DrawLayoutMatrix(position, r.LayoutMatrix, tilemap, TilePalette);
+        r.ClearLayout();
+        r.DrawWall(TilePalette);
+        DrawLayoutMatrix(position + new Vector3Int(0,0,1), r.LayoutMatrix, tilemap, TilePalette);
+
+        /*if (r.openDirection[0] == 1) OpenExitVertical(r, Sides.Left);
         if (r.openDirection[1] == 1) OpenExitVertical(r, Sides.Right);
         if (r.openDirection[2] == 1) OpenExitHorizontal(r, Sides.Bottom);
-        if (r.openDirection[3] == 1) OpenExitHorizontal(r, Sides.Top);
+        if (r.openDirection[3] == 1) OpenExitHorizontal(r, Sides.Top);*/
+
         CreateRoomCollider(r);
         Rooms.Add(r);
         return r;
